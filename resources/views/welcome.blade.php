@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{ $test }}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -125,6 +125,20 @@
                     <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                     </div>
+
+                    @newlinesToBr("testing is:\r\nwhen you test something...")
+
+                    @if (app('context')->isPublic())
+                        &copy; Copyright MyApp LLC
+                    @else
+                        &copy; Copyright {{ app('context')->client->name }}
+                    @endif
+
+                    @ifPublic
+                        &copy; Copyright MyApp LLC
+                    @else
+                        &copy; Copyright {{ app('context')->client->name }}
+                    @endif
                 </div>
             </div>
         </div>

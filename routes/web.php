@@ -13,9 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('home', function() {
+    return response()->make('Fuck you!');
 });
+
+Route::get('dashboard', function() {
+    return view('dashboard');
+})->name('dashboard');
+
+Route::get('apply', function() {
+    return view('apply');
+})->name('apply');
 
 // In order to build a signed URL to access a given route, the route must have a name:
 // Route::get('invitations/{invitation}/{answer}', 'InvitationController')->name('invitations')->middleware('signed');
@@ -36,6 +44,23 @@ Route::get('/', function () {
 // });
 
 // returns resources/views/welcome.blade.php
-Route::view('/', 'welcome');
+// Route::view('/', 'welcome');
 // passing simple data to Route::view()
-Route::view('/', 'welcome', ['User' => 'Michael']);
+// Route::view('/', 'welcome', ['User' => 'Michael']);
+
+Route::get('/', 'TasksController@index');
+Route::get('tasks/create', 'TasksController@create');
+// Route::post('tasks', 'TasksController@store');
+Route::resource('tasks', 'TasksController');
+Route::resource('blabla', 'MySampleResourceController');
+Route::apiResource('sample-api', 'MySampleResourceAPIController');
+Route::post('users/{user}/update-avatar', 'UpdateUserAvatar');
+
+// implicit route model binding
+// Conference is a model
+// {conference} is always an id because route model binding in laravel looks in the database by primary key
+Route::get('conferences/{conference}', function(Conference $conference) {
+    return view('conferences.show')->with('conference', $conference);
+});
+
+// Route::get('conferences/{conference}', 'TasksController@show')->name('tasks.show');
